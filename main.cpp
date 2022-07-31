@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 #include "myskiplist.hpp"
+#include <string>
 #define FILE_PATH "./dumpFile"
 
 class MyLess
@@ -17,7 +18,8 @@ class MyStrcmp
 public:
     bool operator()(string a1, string a2)
     {
-        return a1 > a2;
+        int res = strcmp(a1.c_str(), a2.c_str());
+        return res < 0 ? true : false;
     }
 };
 
@@ -53,11 +55,8 @@ void test()
     cout << "----------------------------------" << endl;
 }
 
-int main()
+void test2()
 {
-
-    // 键值中的key用int型，如果用其他类型，需要自定义比较函数
-    // 而且如果修改key的类型，同时需要修改skipList.load_file函数
     SkipList<int, string, MyLess> skipList(6);
     skipList.insert_element(1, "你好");
     skipList.insert_element(3, "我是");
@@ -86,7 +85,11 @@ int main()
     skipList.display_list();
 
     cout << "----------------------------------" << endl;
+}
 
-    test();
+int main()
+{
+    test();  // int string类型的操作
+    test2(); // string string类型的操作
     return 0;
 }
